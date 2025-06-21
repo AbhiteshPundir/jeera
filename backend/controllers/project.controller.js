@@ -1,15 +1,18 @@
 import Project from '../models/project.model.js';
 
-// @desc Create new project
 export const createProject = async (req, res) => {
-  const { name, description, members } = req.body;
-
   try {
+    const { name, description, members } = req.body;
+
+    if (!name || !description) {
+      return res.status(400).json({ message: "Name and description are required." });
+    }
+
     const project = await Project.create({
       name,
       description,
       createdBy: req.user._id,
-      members: members || [],
+      members: [...new Set([...members, req.user._id])] // using set to avoid duplicates
     });
 
     res.status(201).json(project);
@@ -18,7 +21,6 @@ export const createProject = async (req, res) => {
   }
 };
 
-// @desc Get all projects for current user
 export const getMyProjects = async (req, res) => {
   try {
     const projects = await Project.find({
