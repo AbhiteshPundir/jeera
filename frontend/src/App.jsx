@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import PrivateRoute from './components/PrivateRoute';
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
   return (
@@ -8,7 +10,11 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/" element={<h1 className="text-center mt-20 text-2xl">Welcome to Smart Task Manager</h1>} />
+        <Route path="/" element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        } />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>

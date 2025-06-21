@@ -1,4 +1,4 @@
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/auth.context';
 import { useNavigate } from 'react-router-dom';
 
 const DashboardLayout = ({ children }) => {
