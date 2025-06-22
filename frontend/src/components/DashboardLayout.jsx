@@ -1,7 +1,7 @@
 import { useAuth } from '../context/auth.context';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayout = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ const DashboardLayout = ({ children }) => {
             Logout
           </button>
         </div>
-        <div>{children}</div>
+        <div><Outlet /></div>
       </div>
     </div>
   );

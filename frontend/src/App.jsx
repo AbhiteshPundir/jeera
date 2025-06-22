@@ -1,31 +1,28 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
+import PrivateRoute from './components/PrivateRoute';
+import DashboardLayout from './components/DashboardLayout';
+
 const App = () => {
   return (
     <div className="dark bg-gray-900 text-white min-h-screen">
       <Routes>
+        {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        {/* Protected Routes */}
+        <Route element={<PrivateRoute />}>
+          <Route element={<DashboardLayout />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/projects" element={<Projects />} />
+          </Route>
+        </Route>
+
         <Route path="*" element={<Navigate to="/" />} />
-
-        <Route path="/" element={
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        } />
-
-        <Route
-          path="/projects"
-          element={
-            <PrivateRoute>
-              <Projects />
-            </PrivateRoute>
-          }
-        />
       </Routes>
     </div>
   );

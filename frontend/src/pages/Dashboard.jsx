@@ -1,10 +1,8 @@
-import DashboardLayout from "../components/DashboardLayout";
+import React from 'react';
 
 const Dashboard = () => {
   return (
-    <DashboardLayout>
       <p>This is your main dashboard content — overview, charts, etc.</p>
-    </DashboardLayout>
   );
 };
 
