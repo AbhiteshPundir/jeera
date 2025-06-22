@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import api from '../services/api';
 import Select from 'react-select';
 import { useAuth } from '../context/auth.context';
+import { Link } from 'react-router-dom';
 
 const Projects = () => {
   const { user } = useAuth();
@@ -185,11 +186,13 @@ const Projects = () => {
         <div className="text-center text-gray-400 mt-8">No projects found. Create your first project!</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {projects.map((proj) => (
-            <div key={proj._id} className="p-4 border rounded shadow bg-gray-800">
-              <h4 className="font-bold">{proj.name}</h4>
-              <p className="text-sm text-gray-300">{proj.description}</p>
-              <p className="text-xs mt-2 text-gray-400">Members: {proj.members?.length}</p>
+          {projects.map((project) => (
+            <div key={project._id} className="p-4 border rounded shadow bg-gray-800">
+              <Link to={`/projects/${project._id}`}>
+                <h4 className="font-bold">{project.name}</h4>
+                <p className="text-sm text-gray-300">{project.description}</p>
+                <p className="text-xs mt-2 text-gray-400">Members: {project.members?.length}</p>
+              </Link>
             </div>
           ))}
         </div>

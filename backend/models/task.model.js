@@ -6,7 +6,10 @@ const taskSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    description: String,
+    description: {
+      type: String,
+      default: ''
+    },
     projectId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Project',
@@ -26,7 +29,9 @@ const taskSchema = new mongoose.Schema(
       enum: ['low', 'medium', 'high'],
       default: 'medium',
     },
-    dueDate: Date,
+    dueDate: {
+      type: Date
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',

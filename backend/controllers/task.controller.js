@@ -7,7 +7,7 @@ export const createTask = async (req, res) => {
     const task = await Task.create({
       title,
       description,
-      projectId,
+      project: projectId,
       assignedTo,
       priority,
       dueDate,
@@ -21,7 +21,7 @@ export const createTask = async (req, res) => {
 };
 
 export const getTasksByProject = async (req, res) => {
-  const { projectId } = req.params;
+  const { projectId } = req.query;
 
   try {
     const tasks = await Task.find({ projectId })
@@ -34,12 +34,14 @@ export const getTasksByProject = async (req, res) => {
   }
 };
 
-export const updateTaskStatus = async (req, res) => {
+export const updateTask = async (req, res) => {
   const { taskId } = req.params;
-  const { status } = req.body;
+  const updates = req.body;
 
   try {
-    const task = await Task.findByIdAndUpdate(taskId, { status }, { new: true });
+    const task = await Task.findByIdAndUpdate(taskId, updates, { new: true });
+    if (!task) return res.status(404).json({ message: 'Task not found' });
+
     res.status(200).json(task);
   } catch (error) {
     res.status(500).json({ message: error.message });
