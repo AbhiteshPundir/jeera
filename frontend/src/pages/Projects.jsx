@@ -155,9 +155,7 @@ const Projects = () => {
                 }}
               />
             </div>
-
-
-            <div className="absolute bottom-4 left-0 w-full flex justify-center gap-4">
+            <div className="w-full flex justify-center gap-4">
               <button
                 onClick={() => {
                   setShowModal(false);
