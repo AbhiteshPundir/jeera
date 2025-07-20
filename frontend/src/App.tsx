@@ -6,7 +6,7 @@ import Projects from './pages/Projects';
 import ProjectDetails from './pages/ProjectDetails';
 import PrivateRoute from './components/PrivateRoute';
 import DashboardLayout from './components/DashboardLayout';
-
+import Index from './pages/Index';
 const App = () => {
   return (
     <div className="dark bg-gray-900 text-white min-h-screen">
@@ -14,11 +14,11 @@ const App = () => {
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
+        <Route path="/" element={<Index />} />
         {/* Protected Routes */}
         <Route element={<PrivateRoute />}>
           <Route element={<DashboardLayout />}>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/home" element={<Dashboard />} />
             <Route path="/projects" element={<Projects />}/>
             <Route path="/projects/:id" element={<ProjectDetails />} />
           </Route>

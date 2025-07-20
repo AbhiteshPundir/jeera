@@ -7,7 +7,7 @@ export const createTask = async (req, res) => {
     const task = await Task.create({
       title,
       description,
-      project: projectId,
+      projectId,
       assignedTo,
       priority,
       dueDate,
@@ -21,7 +21,7 @@ export const createTask = async (req, res) => {
 };
 
 export const getTasksByProject = async (req, res) => {
-  const { projectId } = req.query;
+  const { projectId } = req.params;
 
   try {
     const tasks = await Task.find({ projectId })
