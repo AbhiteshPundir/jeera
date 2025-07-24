@@ -21,7 +21,8 @@ export const registerUser = async (req, res) => {
       .cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
+        path: '/',
       })
       .status(201)
       .json({
@@ -49,7 +50,8 @@ export const loginUser = async (req, res) => {
       .cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
+        path: '/',
       })
       .status(200)
       .json({
@@ -64,13 +66,17 @@ export const loginUser = async (req, res) => {
 };
 
 export const logoutUser = (req, res) => {
-  res.clearCookie('token').status(200).json({ message: 'Logged out successfully' });
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'none',
+    path: '/',
+  }).status(200).json({ message: 'Logged out successfully' });
 };
 
 export const getUserProfile = async (req, res) => {
   try {
-    const userId = req.userId; // populated by verifyJWT middleware
-    const user = await User.findById(userId).select('-password'); // exclude password
+    const user = req.user; // populated by verifyJWT middleware
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }

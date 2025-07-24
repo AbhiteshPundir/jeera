@@ -33,7 +33,7 @@ const DashboardLayout: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Dashboard', to: '/', icon: Home },
+    { name: 'Dashboard', to: '/home', icon: Home },
     { name: 'Projects', to: '/projects', icon: FolderKanban },
     { name: 'My Tasks', to: '/tasks', icon: CheckSquare },
   ];
