@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 
 const api: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://imaginative-inspiration-production.up.railway.app/api',
   withCredentials: true,
 });
 
