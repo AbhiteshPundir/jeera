@@ -1,4 +1,4 @@
-name: Echo on Push to Main
+name: Deploy to Railway from Backend
 
 on:
   push:
@@ -6,8 +6,23 @@ on:
       - main
 
 jobs:
-  echo-job:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Echo message
-        run: echo "Push detected on main branch!"
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Railway CLI
+        run: npm install -g railway
+
+      - name: Deploy using Railway CLI
+        working-directory: ./backend
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up
