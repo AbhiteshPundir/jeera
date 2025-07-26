@@ -47,3 +47,14 @@ export const updateTask = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getTasksByUser = async (req, res) => {
+  try {
+    const tasks = await Task.find({ assignedTo: req.user._id })
+      .populate('assignedTo', 'name email')
+      .populate('projectId', 'name');
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

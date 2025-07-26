@@ -24,6 +24,7 @@ import {
   Home,
   FolderKanban,
   CheckSquare,
+  Container,
 } from 'lucide-react';
 
 const DashboardLayout: React.FC = () => {
@@ -58,7 +59,7 @@ const DashboardLayout: React.FC = () => {
             variant={isActive(item.to) ? 'default' : 'ghost'}
             className={`${mobile ? 'justify-start' : ''} ${
               isActive(item.to)
-                ? 'bg-primary text-primary-foreground'
+                ? 'bg-yellow-400 text-primary-foreground'
                 : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
             }`}
             onClick={() => {
@@ -87,11 +88,11 @@ const DashboardLayout: React.FC = () => {
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-64 bg-card">
+              <SheetContent side="left" className="w-64 bg-yellow-500">
                 <div className="flex flex-col space-y-4 mt-8">
                   <div className="px-3 py-2">
-                    <h2 className="mb-2 px-2 text-lg font-semibold text-foreground">
-                      🧠 Task Manager
+                    <h2 className="mb-2 px-2 text-xl font-semibold">
+                      Jeera
                     </h2>
                   </div>
                   <NavItems mobile />
@@ -105,11 +106,12 @@ const DashboardLayout: React.FC = () => {
 
             <Button
               variant="ghost"
-              className="text-xl font-bold text-foreground hover:bg-transparent"
-              onClick={() => navigate('/')}
+              className="text-2xl font-bold text-foreground hover:bg-transparent"
+              onClick={() => navigate('/home')}
             >
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                🧠 Task Manager
+              <span className="text-yellow-400 bg-clip-text flex items-center gap-1">
+                <Container className='text-yellow-700' />
+                Jeera
               </span>
             </Button>
           </div>

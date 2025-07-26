@@ -5,6 +5,7 @@ import { Plus, Search, MoreVertical, Edit, Trash2, Users, Calendar } from 'lucid
 
 import { useAuth } from '@/context/auth.context';
 import api from '@/services/api';
+import type { Project, Task, User } from '../types/index';
 
 import {
   Card,
@@ -27,10 +28,11 @@ const Projects = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [projects, setProjects] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [projectTaskCounts, setProjectTaskCounts] = useState<Record<string, number>>({});
 
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ name: '', description: '' });
@@ -54,6 +56,19 @@ const Projects = () => {
     } catch (err) {
       console.error('Error fetching users:', err);
     }
+  };
+
+  const fetchTaskCounts = async (projects: Project[]) => {
+    const counts: Record<string, number> = {};
+    await Promise.all(projects.map(async (project) => {
+      try {
+        const res = await api.get(`/tasks/${project._id}`);
+        counts[project._id] = res.data.length;
+      } catch {
+        counts[project._id] = 0;
+      }
+    }));
+    setProjectTaskCounts(counts);
   };
 
   const handleCreateProject = async () => {
@@ -87,13 +102,19 @@ const Projects = () => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    if (projects.length > 0) {
+      fetchTaskCounts(projects);
+    }
+  }, [projects]);
+
   const filteredProjects = projects.filter((p) =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const userOptions = users
-    .filter(u => u._id !== user._id)
+    .filter(u => user && u._id !== user._id)
     .map(u => ({ value: u._id, label: u.name }));
 
   return (
@@ -203,7 +224,7 @@ const Projects = () => {
                   )}
                 </div>
                 <Badge variant="secondary" className="text-xs">
-                  {project.tasks?.length ?? 0} tasks
+                  {projectTaskCounts[project._id] ?? 0} tasks
                 </Badge>
               </CardContent>
             </Card>

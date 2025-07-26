@@ -16,7 +16,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         console.log("Checking authentication status...")
         const response = await api.get("/users/profile")
-        console.log("Auth check successful:", response.data)
         setUser(response.data)
       } catch (error) {
         console.log("Auth check failed:", error)

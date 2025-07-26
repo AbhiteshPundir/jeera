@@ -210,7 +210,7 @@ const ProjectDetails = () => {
       {/* Project Info */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">{project.name}</CardTitle>
+          <CardTitle className="text-2xl text-yellow-500">{project.name}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-4">{project.description}</p>
@@ -230,10 +230,12 @@ const ProjectDetails = () => {
       {/* Tasks Kanban */}
       <div>
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Tasks</h2>
-          <Button size="sm" onClick={() => setIsTaskModalOpen(true)}>+ Add Task</Button>
+          <h2 className="text-xl font-semibold">Tasks
+            <h4 className='text-sm font-extralight '>Drag and drop tasks to modify status</h4>
+          </h2>
+          <Button size="sm" className='bg-yellow-400' onClick={() => setIsTaskModalOpen(true)}>+ Add Task</Button>
         </div>
-
+        
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <div className="flex flex-col md:flex-row gap-4 w-full overflow-x-auto">
             {(['todo', 'in-progress', 'done'] as const).map((status) => (
